@@ -1,41 +1,63 @@
-import styled from "styled-components";
+import Logo from "./Logo";
+import ScrollingImage from "./ScrollingImage";
 import { Purple, Green, Blue } from "./styles/Colors";
 import { Title, Link, Text, Bold } from "./styles/TextStyles";
-const Card = styled.div``;
 
-// TODO: Add screenshots
+// TODO: create a link that opens a modal with all of the info in it
 
-export default ({ project }) => (
-	<Card>
-		<Title href={project.link || project.repo} target={"_blank"}>
-			{project.title}
+function mappedRepos({ frontend, backend }) {
+	return (
+		<React.Fragment>
+			<Link href={frontend} target="_blank" hoverColor={Blue}>
+				Frontend
+			</Link>{" "}
+			|{" "}
+			<Link href={backend} target="_blank" hoverColor={Blue}>
+				Backend
+			</Link>
+		</React.Fragment>
+	);
+}
+
+function repoSwitch(repo) {
+	if (typeof repo === "object") {
+		return mappedRepos(repo);
+	}
+
+	return (
+		<Link href={repo} target="_blank" hoverColor={Blue}>
+			Github
+		</Link>
+	);
+}
+
+export default ({
+	project: { title, link, repo, description, tech, image },
+}) => (
+	<div>
+		{image && <ScrollingImage src={image.src} alt={image.alt} />}
+		<Title href={link || repo} target={"_blank"}>
+			{title}
 		</Title>
-		<Text>{project.description}</Text>
+		<Text>{description}</Text>
 		<Text>
-			<Bold textColor={Purple}>Tech</Bold> - {project.tech}
+			<Bold textColor={Purple}>Tech</Bold> - {tech}
 		</Text>
-		{project.link && project.repo ? (
+		{link && repo ? (
 			<Text>
-				<Link href={project.link} target="_blank" hoverColor={Green}>
+				<Link href={link} target="_blank" hoverColor={Green}>
 					Live
 				</Link>{" "}
-				|{" "}
-				<Link href={project.repo} target="_blank" hoverColor={Blue}>
-					Github
-				</Link>
+				| {repoSwitch(repo)}
 			</Text>
-		) : project.repo ? (
+		) : repo ? (
+			<Text>{repoSwitch(repo)}</Text>
+		) : link ? (
 			<Text>
-				<Link href={project.repo} target="_blank" hoverColor={Blue}>
-					Github
-				</Link>
-			</Text>
-		) : project.link ? (
-			<Text>
-				<Link href={project.link} target="_blank" hoverColor={Green}>
+				<Link href={link} target="_blank" hoverColor={Green}>
 					Live
 				</Link>
 			</Text>
 		) : null}
-	</Card>
+	</div>
 );

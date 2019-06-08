@@ -14,6 +14,7 @@ const Bold = styled.span`
 
 export default props => (
 	<Footer>
-		this page built with <Bold>React | Next.js | styled-components | Now</Bold>
+		this page built with{" "}
+		<Bold>React | Next.js | styled-components | Now.sh</Bold>
 	</Footer>
 );
