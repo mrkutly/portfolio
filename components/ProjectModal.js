@@ -3,6 +3,8 @@ import ScrollingImage from "./ScrollingImage";
 import { Purple, Green, Blue, Black } from "./styles/Colors";
 import { ModalTitle, Link, Text, Bold } from "./styles/TextStyles";
 
+// TODO: add escape keypress to close modal
+
 const Outer = styled.div`
 	width: 100vw;
 	height: 100vh;
@@ -16,11 +18,20 @@ const Outer = styled.div`
 const Inner = styled.div`
 	background-color: white;
 	width: 70vw;
-	margin: 5vh auto;
+	margin: 10vh auto;
 	max-height: 80vh;
 	overflow: scroll;
 	z-index: 2;
 	padding: 5em;
+`;
+
+const Grid = styled.div`
+	display: grid;
+	grid-template-columns: ${props => (props.columns === 2 ? "1fr 2fr" : "1fr")};
+`;
+
+const Column = styled.div`
+	margin: 0 1em;
 `;
 
 const CloseButton = styled.a`
@@ -33,7 +44,6 @@ const CloseButton = styled.a`
 		color: ${Blue};
 	}
 `;
-// TODO: Build modal that has links, info, and scrollable screenshots or maybe a carousel of screenshots
 
 function mappedRepos({ frontend, backend }) {
 	return (
@@ -63,41 +73,50 @@ function repoSwitch(repo) {
 
 export default ({
 	project: { title, link, repo, description, tech, image },
+	closeModal,
 }) => {
-	const close = e => {
+	const handleClose = e => {
 		e.preventDefault();
-		// TODO: code here to set global state to remove modal
+		closeModal();
 	};
 	return (
-		<Outer>
+		<Outer onClick={closeModal}>
 			<Inner>
-				<ModalTitle href={link || repo} target={"_blank"}>
-					{title}
-				</ModalTitle>
-				<CloseButton onClick={close} href="">
+				<CloseButton onClick={handleClose} href="">
 					X
 				</CloseButton>
-				{image && <ScrollingImage src={image.src} alt={image.alt} />}
-				<Text>{description}</Text>
-				<Text>
-					<Bold textColor={Purple}>Tech</Bold> - {tech}
-				</Text>
-				{link && repo ? (
-					<Text>
-						<Link href={link} target="_blank" hoverColor={Green}>
-							Live
-						</Link>{" "}
-						| {repoSwitch(repo)}
-					</Text>
-				) : repo ? (
-					<Text>{repoSwitch(repo)}</Text>
-				) : link ? (
-					<Text>
-						<Link href={link} target="_blank" hoverColor={Green}>
-							Live
-						</Link>
-					</Text>
-				) : null}
+				<Grid columns={image ? 2 : 1}>
+					<Column>
+						<ModalTitle href={link || repo} target={"_blank"}>
+							{title}
+						</ModalTitle>
+						<Text>{description}</Text>
+						<Text>
+							<Bold textColor={Purple}>Tech</Bold> - {tech}
+						</Text>
+						{link && repo ? (
+							<Text>
+								<Link href={link} target="_blank" hoverColor={Green}>
+									Live
+								</Link>{" "}
+								| {repoSwitch(repo)}
+							</Text>
+						) : repo ? (
+							<Text>{repoSwitch(repo)}</Text>
+						) : link ? (
+							<Text>
+								<Link href={link} target="_blank" hoverColor={Green}>
+									Live
+								</Link>
+							</Text>
+						) : null}
+					</Column>
+					{image && (
+						<Column>
+							<ScrollingImage src={image.src} alt={image.alt} />
+						</Column>
+					)}
+				</Grid>
 			</Inner>
 		</Outer>
 	);

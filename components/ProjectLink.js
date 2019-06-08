@@ -8,10 +8,11 @@ const ListItem = styled.li`
 	font-size: 2.5em;
 `;
 
-export default ({ project }) => {
-	const openModal = e => {
+export default ({ project, setActiveProject }) => {
+	const openModal = async e => {
 		e.preventDefault();
-		// TODO: Code here to set global modal state
+		// TODO: Code here to set modal state
+		setActiveProject(project);
 	};
 
 	return (

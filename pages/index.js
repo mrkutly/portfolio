@@ -5,7 +5,6 @@ import { Purple } from "../components/styles/Colors";
 import About from "../components/About";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
-import { useModal } from "../hooks/useModal";
 
 export default () => {
 	return (

@@ -49,9 +49,5 @@ export const projects = [
 		repo:
 			"https://github.com/taboola/taboola-react-native-example/tree/master/full-example/TaboolaReactNativeExample",
 		link: null,
-		image: {
-			src: require("../static/taboola-logo.png"),
-			alt: "Taboola Logo",
-		},
 	},
 ];
