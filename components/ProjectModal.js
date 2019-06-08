@@ -23,6 +23,7 @@ const Inner = styled.div`
 	overflow: scroll;
 	z-index: 2;
 	padding: 5em;
+	border: 2px solid ${Purple};
 `;
 
 const Grid = styled.div`
@@ -79,11 +80,17 @@ export default ({
 		e.preventDefault();
 		closeModal();
 	};
+
+	const handleOutsideClick = e => {
+		if (!e.target.className.includes("Outer")) return;
+		closeModal();
+	};
+
 	return (
-		<Outer onClick={closeModal}>
+		<Outer onClick={handleOutsideClick}>
 			<Inner>
 				<CloseButton onClick={handleClose} href="">
-					X
+					~~X~~
 				</CloseButton>
 				<Grid columns={image ? 2 : 1}>
 					<Column>

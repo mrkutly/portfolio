@@ -15,6 +15,8 @@ const Bold = styled.span`
 export default props => (
 	<Footer>
 		this page built with{" "}
-		<Bold>React | Next.js | styled-components | Now.sh</Bold>
+		<a href="https://github.com/mrkutly/portfolio" target="_blank">
+			<Bold>React | Next.js | styled-components | Now.sh</Bold>
+		</a>
 	</Footer>
 );
