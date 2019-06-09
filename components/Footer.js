@@ -21,10 +21,7 @@ const RepoLink = styled.a`
 export default props => (
 	<Footer>
 		this page built with{" "}
-		<RepoLink
-			href="https://github.com/mrkutly/portfolio"
-			tRepoLinkrget="_blank"
-		>
+		<RepoLink href="https://github.com/mrkutly/portfolio" target="_blank">
 			<Bold>React | Next.js | styled-components | Now.sh</Bold>
 		</RepoLink>
 	</Footer>

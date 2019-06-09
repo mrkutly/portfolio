@@ -18,7 +18,7 @@ const Outer = styled.div`
 const Inner = styled.div`
 	background-color: white;
 	width: 70vw;
-	margin: 10vh auto;
+	margin: 5vh auto;
 	max-height: 80vh;
 	overflow: scroll;
 	z-index: 2;

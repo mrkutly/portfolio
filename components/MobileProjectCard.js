@@ -1,9 +1,5 @@
-import Logo from "./Logo";
-import ScrollingImage from "./ScrollingImage";
 import { Purple, Green, Blue } from "./styles/Colors";
-import { Title, Link, Text, Bold } from "./styles/TextStyles";
-
-// TODO: create a link that opens a modal with all of the info in it
+import { MobileTitle, Link, Text, Bold } from "./styles/TextStyles";
 
 function mappedRepos({ frontend, backend }) {
 	return (
@@ -35,10 +31,7 @@ export default ({
 	project: { title, link, repo, description, tech, image },
 }) => (
 	<div>
-		{image && <ScrollingImage src={image.src} alt={image.alt} />}
-		<Title href={link || repo} target={"_blank"}>
-			{title}
-		</Title>
+		<MobileTitle>{title}</MobileTitle>
 		<Text>{description}</Text>
 		<Text>
 			<Bold textColor={Purple}>Tech</Bold> - {tech}

@@ -44,6 +44,12 @@ export const Title = styled.a`
 	}
 `;
 
+export const MobileTitle = styled.div`
+	color: ${Black};
+	font-weight: bold;
+	font-size: 4em;
+`;
+
 export const ModalTitle = styled.a`
 	text-decoration: none;
 	color: ${Black};
