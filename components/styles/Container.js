@@ -5,8 +5,4 @@ export default styled.div`
 	h4 {
 		font-size: 4em;
 	}
-
-	@media (max-width: 1000px) {
-		margin-top: 30vh;
-	}
 `;
