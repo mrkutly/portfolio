@@ -9,9 +9,9 @@ export default () => {
 	return (
 		<Layout>
 			<Name />
-			<ArrowStyles>{`\uFFEC`}</ArrowStyles>
+			<ArrowStyles>&#xFFEC;</ArrowStyles>
 			<About />
-			<ArrowStyles>{`\uFFEC`}</ArrowStyles>
+			<ArrowStyles>&#xFFEC;</ArrowStyles>
 			<Contact />
 			<Footer />
 		</Layout>

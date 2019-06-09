@@ -18,6 +18,7 @@ export const LargeText = styled.div`
 `;
 
 export const ArrowStyles = styled.div`
+	font-family: WingDings;
 	color: ${Purple};
 	font-size: 7em;
 	line-height: 0.51em;
