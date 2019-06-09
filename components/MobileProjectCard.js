@@ -1,16 +1,31 @@
+import styled from "styled-components";
 import { Purple, Green, Blue } from "./styles/Colors";
 import { MobileTitle, Link, Text, Bold } from "./styles/TextStyles";
+
+const LinksBox = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	margin-top: 3.5em;
+`;
+
+const LinkText = styled.span`
+	place-self: start;
+	font-size: 1.8em;
+`;
 
 function mappedRepos({ frontend, backend }) {
 	return (
 		<React.Fragment>
-			<Link href={frontend} target="_blank" hoverColor={Blue}>
-				Frontend
-			</Link>{" "}
-			|{" "}
-			<Link href={backend} target="_blank" hoverColor={Blue}>
-				Backend
-			</Link>
+			<LinkText>
+				<Link href={frontend} target="_blank" hoverColor={Blue}>
+					Frontend
+				</Link>
+			</LinkText>
+			<LinkText>
+				<Link href={backend} target="_blank" hoverColor={Blue}>
+					Backend
+				</Link>
+			</LinkText>
 		</React.Fragment>
 	);
 }
@@ -36,21 +51,25 @@ export default ({
 		<Text>
 			<Bold textColor={Purple}>Tech</Bold> - {tech}
 		</Text>
-		{link && repo ? (
-			<Text>
-				<Link href={link} target="_blank" hoverColor={Green}>
-					Live
-				</Link>{" "}
-				| {repoSwitch(repo)}
-			</Text>
-		) : repo ? (
-			<Text>{repoSwitch(repo)}</Text>
-		) : link ? (
-			<Text>
-				<Link href={link} target="_blank" hoverColor={Green}>
-					Live
-				</Link>
-			</Text>
-		) : null}
+		<LinksBox>
+			{link && repo ? (
+				<React.Fragment>
+					<LinkText>
+						<Link href={link} target="_blank" hoverColor={Green}>
+							Live
+						</Link>
+					</LinkText>
+					{repoSwitch(repo)}
+				</React.Fragment>
+			) : repo ? (
+				<LinkText>{repoSwitch(repo)}</LinkText>
+			) : link ? (
+				<LinkText>
+					<Link href={link} target="_blank" hoverColor={Green}>
+						Live
+					</Link>
+				</LinkText>
+			) : null}
+		</LinksBox>
 	</div>
 );

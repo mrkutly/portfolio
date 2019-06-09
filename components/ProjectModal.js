@@ -9,6 +9,7 @@ const Outer = styled.div`
 	width: 100vw;
 	height: 100vh;
 	position: fixed;
+	display: grid;
 	top: 0;
 	left: 0;
 	z-index: 1;
@@ -17,18 +18,24 @@ const Outer = styled.div`
 
 const Inner = styled.div`
 	background-color: white;
-	width: 70vw;
-	margin: 5vh auto;
-	max-height: 80vh;
+	width: 60vw;
+	margin: auto;
+	max-height: 70vh;
 	overflow: scroll;
 	z-index: 2;
 	padding: 5em;
 	border: 2px solid ${Purple};
+	font-size: 1.1em;
 `;
 
 const Grid = styled.div`
 	display: grid;
 	grid-template-columns: ${props => (props.columns === 2 ? "1fr 2fr" : "1fr")};
+`;
+
+const SubGrid = styled.div`
+	display: grid;
+	grid-template-rows: one 2fr two 1fr three 1fr four 1fr five 1fr;
 `;
 
 const Column = styled.div`
@@ -94,29 +101,34 @@ export default ({
 				</CloseButton>
 				<Grid columns={image ? 2 : 1}>
 					<Column>
-						<ModalTitle href={link || repo} target={"_blank"}>
-							{title}
-						</ModalTitle>
-						<Text>{description}</Text>
-						<Text>
-							<Bold textColor={Purple}>Tech</Bold> - {tech}
-						</Text>
-						{link && repo ? (
+						<SubGrid columns={1}>
+							<ModalTitle href={link || repo} target={"_blank"}>
+								{title}
+							</ModalTitle>
+
+							<Text>{description}</Text>
+
 							<Text>
-								<Link href={link} target="_blank" hoverColor={Green}>
-									Live
-								</Link>{" "}
-								| {repoSwitch(repo)}
+								<Bold textColor={Purple}>Tech</Bold> - {tech}
 							</Text>
-						) : repo ? (
-							<Text>{repoSwitch(repo)}</Text>
-						) : link ? (
-							<Text>
-								<Link href={link} target="_blank" hoverColor={Green}>
-									Live
-								</Link>
-							</Text>
-						) : null}
+
+							{link && repo ? (
+								<Text>
+									<Link href={link} target="_blank" hoverColor={Green}>
+										Live
+									</Link>{" "}
+									| {repoSwitch(repo)}
+								</Text>
+							) : repo ? (
+								<Text>{repoSwitch(repo)}</Text>
+							) : link ? (
+								<Text>
+									<Link href={link} target="_blank" hoverColor={Green}>
+										Live
+									</Link>
+								</Text>
+							) : null}
+						</SubGrid>
 					</Column>
 					{image && (
 						<Column>
