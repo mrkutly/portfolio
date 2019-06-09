@@ -13,7 +13,7 @@ export default class Project extends React.Component {
 
 	render() {
 		const { setActiveProject, project } = this.props;
-		const mobileLayout = this.state.width < 500;
+		const mobileLayout = this.state.width <= 1000;
 
 		return (
 			<>

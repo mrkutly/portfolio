@@ -6,7 +6,7 @@ export default styled.div`
 		font-size: 4em;
 	}
 
-	@media (max-width: 500px) {
+	@media (max-width: 1000px) {
 		margin-top: 30vh;
 	}
 `;

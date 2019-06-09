@@ -14,15 +14,16 @@ const Bold = styled.span`
 `;
 
 const RepoLink = styled.a`
-	text-decoration: none;
+	text-decoration: underline;
 	color: ${Black};
 `;
 
 export default props => (
 	<Footer>
 		this page built with{" "}
+		<Bold>React | Next.js | styled-components | Now.sh</Bold> -{" "}
 		<RepoLink href="https://github.com/mrkutly/portfolio" target="_blank">
-			<Bold>React | Next.js | styled-components | Now.sh</Bold>
-		</RepoLink>
+			code here
+		</RepoLink>{" "}
 	</Footer>
 );

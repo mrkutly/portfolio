@@ -8,7 +8,7 @@ export const LargeText = styled.div`
 	margin-top: 20vh;
 	max-width: 700px;
 
-	@media (max-width: 500px) {
+	@media (max-width: 1000px) {
 		margin-top: 30vh;
 		max-width: 480px;
 		font-size: 10em;
@@ -18,19 +18,22 @@ export const LargeText = styled.div`
 `;
 
 export const ArrowStyles = styled.div`
-	font-family: WingDings;
+	font-family: WingDings, WebDings, Arial, Helvetica, sans-serif;
 	color: ${Purple};
 	font-size: 7em;
 	line-height: 0.51em;
-	margin: 30vh 0;
+	margin: 20vh 0;
 	max-width: 700px;
 	opacity: 1;
 	animation: ${flicker} 2.5s infinite cubic-bezier(0.63, 0.35, 0.64, 0.35);
 
-	@media (max-width: 500px) {
-		margin-top: 30vh;
+	@media (max-width: 1000px) {
 		max-width: 480px;
-		font-size: 10em;
+		font-size: 5em;
+	}
+
+	@media (max-width: 500px) {
+		margin: 15vh 0;
 	}
 `;
 
@@ -72,7 +75,7 @@ export const Link = styled.a`
 		color: ${props => props.hoverColor};
 	}
 
-	@media (max-width: 500px) {
+	@media (max-width: 1000px) {
 		border-bottom: 2px solid ${props => props.hoverColor};
 		border-top: 2px solid ${props => props.hoverColor};
 		padding: 0.5em 1em;
@@ -89,12 +92,6 @@ export const Link = styled.a`
 export const Text = styled.div`
 	font-size: 1.8em;
 	margin-top: 2.5vh;
-
-	@media (max-width: 500px) {
-		&:nth-last-of-type(1) {
-			margin-top: 4vh;
-		}
-	}
 `;
 
 export const Bold = styled.span`

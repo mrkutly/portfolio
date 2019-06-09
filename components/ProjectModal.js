@@ -1,9 +1,8 @@
+import React from "react";
 import styled from "styled-components";
 import ScrollingImage from "./ScrollingImage";
 import { Purple, Green, Blue, Black } from "./styles/Colors";
 import { ModalTitle, Link, Text, Bold } from "./styles/TextStyles";
-
-// TODO: add escape keypress to close modal
 
 const Outer = styled.div`
 	width: 100vw;
@@ -79,64 +78,81 @@ function repoSwitch(repo) {
 	);
 }
 
-export default ({
-	project: { title, link, repo, description, tech, image },
-	closeModal,
-}) => {
-	const handleClose = e => {
+export default class ProjectModal extends React.Component {
+	handleClose = e => {
 		e.preventDefault();
-		closeModal();
+		this.props.closeModal();
 	};
 
-	const handleOutsideClick = e => {
+	handleOutsideClick = e => {
 		if (!e.target.className.includes("Outer")) return;
-		closeModal();
+		this.props.closeModal();
 	};
 
-	return (
-		<Outer onClick={handleOutsideClick}>
-			<Inner>
-				<CloseButton onClick={handleClose} href="">
-					~~X~~
-				</CloseButton>
-				<Grid columns={image ? 2 : 1}>
-					<Column>
-						<SubGrid columns={1}>
-							<ModalTitle href={link || repo} target={"_blank"}>
-								{title}
-							</ModalTitle>
+	handleKeyDown = e => {
+		if (e.key === "Escape") {
+			this.props.closeModal();
+		}
+	};
 
-							<Text>{description}</Text>
+	componentDidMount() {
+		document.addEventListener("keydown", this.handleKeyDown);
+	}
 
-							<Text>
-								<Bold textColor={Purple}>Tech</Bold> - {tech}
-							</Text>
+	componentWillUnmount() {
+		document.removeEventListener("keydown", this.handleKeyDown);
+	}
 
-							{link && repo ? (
-								<Text>
-									<Link href={link} target="_blank" hoverColor={Green}>
-										Live
-									</Link>{" "}
-									| {repoSwitch(repo)}
-								</Text>
-							) : repo ? (
-								<Text>{repoSwitch(repo)}</Text>
-							) : link ? (
-								<Text>
-									<Link href={link} target="_blank" hoverColor={Green}>
-										Live
-									</Link>
-								</Text>
-							) : null}
-						</SubGrid>
-					</Column>
-					{image && (
+	render() {
+		const {
+			project: { title, link, repo, description, tech, image },
+			closeModal,
+		} = this.props;
+		return (
+			<Outer onClick={this.handleOutsideClick}>
+				<Inner>
+					<CloseButton onClick={this.handleClose} href="">
+						~~X~~
+					</CloseButton>
+					<Grid columns={image ? 2 : 1}>
 						<Column>
-							<ScrollingImage src={image.src} alt={image.alt} />
+							<SubGrid columns={1}>
+								<ModalTitle href={link || repo} target={"_blank"}>
+									{title}
+								</ModalTitle>
+
+								<Text>{description}</Text>
+
+								<Text>
+									<Bold textColor={Purple}>Tech</Bold> - {tech}
+								</Text>
+
+								{link && repo ? (
+									<Text>
+										<Link href={link} target="_blank" hoverColor={Green}>
+											Live
+										</Link>{" "}
+										| {repoSwitch(repo)}
+									</Text>
+								) : repo ? (
+									<Text>{repoSwitch(repo)}</Text>
+								) : link ? (
+									<Text>
+										<Link href={link} target="_blank" hoverColor={Green}>
+											Live
+										</Link>
+									</Text>
+								) : null}
+							</SubGrid>
 						</Column>
-					)}
-				</Grid>
-			</Inner>
-		</Outer>
-	);
-};
+						{image && (
+							<Column>
+								<ScrollingImage src={image.src} alt={image.alt} />
+							</Column>
+						)}
+					</Grid>
+				</Inner>
+			</Outer>
+		);
+	}
+}
