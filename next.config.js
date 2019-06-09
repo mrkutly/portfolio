@@ -1,2 +1,4 @@
 const withImages = require("next-images");
-module.exports = withImages();
+const exp = withImages();
+exp.target = "serverless";
+module.exports = exp;

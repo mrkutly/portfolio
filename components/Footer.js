@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Black } from "./styles/Colors";
 
 const Footer = styled.footer`
 	letter-spacing: 0.5px;
@@ -12,11 +13,19 @@ const Bold = styled.span`
 	font-weight: bold;
 `;
 
+const RepoLink = styled.a`
+	text-decoration: none;
+	color: ${Black};
+`;
+
 export default props => (
 	<Footer>
 		this page built with{" "}
-		<a href="https://github.com/mrkutly/portfolio" target="_blank">
+		<RepoLink
+			href="https://github.com/mrkutly/portfolio"
+			tRepoLinkrget="_blank"
+		>
 			<Bold>React | Next.js | styled-components | Now.sh</Bold>
-		</a>
+		</RepoLink>
 	</Footer>
 );
