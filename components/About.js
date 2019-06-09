@@ -31,7 +31,7 @@ export default props => {
 
 	return (
 		<Container>
-			<h4>some things i built...</h4>
+			<h4>some things i built</h4>
 			{mappedProjects}
 			{activeProject && (
 				<ProjectModal closeModal={closeModal} project={activeProject} />
