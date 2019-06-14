@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { DarkModeContext } from "../hooks/DarkModeContext";
 import styled from "styled-components";
 import { Green } from "./styles/Colors";
 import { Title } from "./styles/TextStyles";
@@ -9,6 +11,8 @@ const ListItem = styled.li`
 `;
 
 export default ({ project, setActiveProject }) => {
+	const { darkMode } = useContext(DarkModeContext);
+
 	const openModal = async e => {
 		e.preventDefault();
 		// TODO: Code here to set modal state
@@ -17,7 +21,12 @@ export default ({ project, setActiveProject }) => {
 
 	return (
 		<ListItem>
-			<Title href="/" onClick={openModal} hoverColor={Green}>
+			<Title
+				darkMode={darkMode}
+				href="/"
+				onClick={openModal}
+				hoverColor={Green}
+			>
 				{project.title}
 			</Title>
 		</ListItem>

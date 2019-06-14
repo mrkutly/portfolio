@@ -1,5 +1,6 @@
-import React from "react";
+import { useEffect, useContext } from "react";
 import styled from "styled-components";
+import { DarkModeContext } from "../hooks/DarkModeContext";
 import ScrollingImage from "./ScrollingImage";
 import { Purple, Green, Blue, Black } from "./styles/Colors";
 import { ModalTitle, Link, Text, Bold } from "./styles/TextStyles";
@@ -16,11 +17,11 @@ const Outer = styled.div`
 `;
 
 const Inner = styled.div`
-	background-color: white;
+	background-color: ${props => (props.darkMode ? "#111" : "white")};
 	width: 60vw;
 	margin: auto;
 	max-height: 70vh;
-	overflow: scroll;
+	overflow: hidden;
 	z-index: 2;
 	padding: 5em;
 	border: 2px solid ${Purple};
@@ -34,7 +35,7 @@ const Grid = styled.div`
 
 const SubGrid = styled.div`
 	display: grid;
-	grid-template-rows: one 2fr two 1fr three 1fr four 1fr five 1fr;
+	grid-template-rows: 2fr 1fr 1fr 1fr 1fr;
 `;
 
 const Column = styled.div`
@@ -45,114 +46,137 @@ const CloseButton = styled.a`
 	float: right;
 	font-size: 2em;
 	text-decoration: none;
-	color: ${Black};
+	color: ${props => (props.darkMode ? "#cfcfcf" : Black)};
 
 	&:hover {
 		color: ${Blue};
 	}
 `;
 
-function mappedRepos({ frontend, backend }) {
+function mappedRepos({ frontend, backend }, darkMode) {
 	return (
 		<React.Fragment>
-			<Link href={frontend} target="_blank" hoverColor={Blue}>
+			<Link
+				href={frontend}
+				target="_blank"
+				hoverColor={Blue}
+				darkMode={darkMode}
+			>
 				Frontend
 			</Link>{" "}
 			|{" "}
-			<Link href={backend} target="_blank" hoverColor={Blue}>
+			<Link
+				href={backend}
+				target="_blank"
+				hoverColor={Blue}
+				darkMode={darkMode}
+			>
 				Backend
 			</Link>
 		</React.Fragment>
 	);
 }
 
-function repoSwitch(repo) {
+function repoSwitch(repo, darkMode) {
 	if (typeof repo === "object") {
-		return mappedRepos(repo);
+		return mappedRepos(repo, darkMode);
 	}
 
 	return (
-		<Link href={repo} target="_blank" hoverColor={Blue}>
+		<Link href={repo} target="_blank" hoverColor={Blue} darkMode={darkMode}>
 			Github
 		</Link>
 	);
 }
 
-export default class ProjectModal extends React.Component {
-	handleClose = e => {
+export default props => {
+	const { darkMode } = useContext(DarkModeContext);
+	const {
+		project: { title, link, repo, description, tech, image },
+		closeModal,
+	} = props;
+
+	const handleClose = e => {
 		e.preventDefault();
-		this.props.closeModal();
+		props.closeModal();
 	};
 
-	handleOutsideClick = e => {
+	const handleOutsideClick = e => {
 		if (!e.target.className.includes("Outer")) return;
-		this.props.closeModal();
+		props.closeModal();
 	};
 
-	handleKeyDown = e => {
-		if (e.key === "Escape") {
-			this.props.closeModal();
+	useEffect(() => {
+		function handleKeyDown(e) {
+			if (e.key === "Escape") {
+				props.closeModal();
+			}
 		}
-	};
+		document.addEventListener("keydown", handleKeyDown);
 
-	componentDidMount() {
-		document.addEventListener("keydown", this.handleKeyDown);
-	}
+		return function cleanUp() {
+			document.removeEventListener("keydown", handleKeyDown);
+		};
+	});
 
-	componentWillUnmount() {
-		document.removeEventListener("keydown", this.handleKeyDown);
-	}
+	return (
+		<Outer onClick={handleOutsideClick}>
+			<Inner darkMode={darkMode}>
+				<CloseButton onClick={handleClose} href="">
+					~~X~~
+				</CloseButton>
+				<Grid columns={image ? 2 : 1}>
+					<Column>
+						<SubGrid columns={1}>
+							<ModalTitle
+								darkMode={darkMode}
+								href={link || repo}
+								target={"_blank"}
+							>
+								{title}
+							</ModalTitle>
 
-	render() {
-		const {
-			project: { title, link, repo, description, tech, image },
-			closeModal,
-		} = this.props;
-		return (
-			<Outer onClick={this.handleOutsideClick}>
-				<Inner>
-					<CloseButton onClick={this.handleClose} href="">
-						~~X~~
-					</CloseButton>
-					<Grid columns={image ? 2 : 1}>
-						<Column>
-							<SubGrid columns={1}>
-								<ModalTitle href={link || repo} target={"_blank"}>
-									{title}
-								</ModalTitle>
+							<Text>{description}</Text>
 
-								<Text>{description}</Text>
+							<Text>
+								<Bold textColor={Purple}>Tech</Bold> - {tech}
+							</Text>
 
+							{link && repo ? (
 								<Text>
-									<Bold textColor={Purple}>Tech</Bold> - {tech}
+									<Link
+										darkMode={darkMode}
+										href={link}
+										target="_blank"
+										hoverColor={Green}
+									>
+										Live
+									</Link>{" "}
+									| {repoSwitch(repo, darkMode)}
 								</Text>
-
-								{link && repo ? (
-									<Text>
-										<Link href={link} target="_blank" hoverColor={Green}>
-											Live
-										</Link>{" "}
-										| {repoSwitch(repo)}
-									</Text>
-								) : repo ? (
-									<Text>{repoSwitch(repo)}</Text>
-								) : link ? (
-									<Text>
-										<Link href={link} target="_blank" hoverColor={Green}>
-											Live
-										</Link>
-									</Text>
-								) : null}
-							</SubGrid>
+							) : repo ? (
+								<Text>{repoSwitch(repo, darkMode)}</Text>
+							) : link ? (
+								<Text>
+									<Link
+										darkMode={darkMode}
+										href={link}
+										target="_blank"
+										hoverColor={Green}
+									>
+										Live
+									</Link>
+								</Text>
+							) : null}
+						</SubGrid>
+					</Column>
+					{image && (
+						<Column>
+							<ScrollingImage src={image.src} alt={image.alt} />
 						</Column>
-						{image && (
-							<Column>
-								<ScrollingImage src={image.src} alt={image.alt} />
-							</Column>
-						)}
-					</Grid>
-				</Inner>
-			</Outer>
-		);
-	}
-}
+					)}
+				</Grid>
+			</Inner>
+		</Outer>
+	);
+};

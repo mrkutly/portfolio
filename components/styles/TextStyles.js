@@ -39,7 +39,7 @@ export const ArrowStyles = styled.div`
 
 export const Title = styled.a`
 	text-decoration: none;
-	color: ${Black};
+	color: ${props => (props.darkMode ? "#cfcfcf" : Black)};
 	font-weight: bold;
 	cursor: pointer;
 
@@ -49,14 +49,14 @@ export const Title = styled.a`
 `;
 
 export const MobileTitle = styled.div`
-	color: ${Black};
+	color: ${props => (props.darkMode ? "#cfcfcf" : Black)};
 	font-weight: bold;
 	font-size: 4em;
 `;
 
 export const ModalTitle = styled.a`
 	text-decoration: none;
-	color: ${Black};
+	color: ${props => (props.darkMode ? "#cfcfcf" : Black)};
 	font-weight: bold;
 	font-size: 4em;
 	cursor: pointer;
@@ -68,7 +68,7 @@ export const ModalTitle = styled.a`
 
 export const Link = styled.a`
 	text-decoration: none;
-	color: ${Black};
+	color: ${props => (props.darkMode ? "#cfcfcf" : Black)};
 	font-weight: bold;
 
 	&:hover {

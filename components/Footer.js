@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { DarkModeContext } from "../hooks/DarkModeContext";
 import styled from "styled-components";
 import { Black } from "./styles/Colors";
 
@@ -15,15 +17,22 @@ const Bold = styled.span`
 
 const RepoLink = styled.a`
 	text-decoration: underline;
-	color: ${Black};
+	color: ${props => (props.darkMode ? "#cfcfcf" : Black)};
 `;
 
-export default props => (
-	<Footer>
-		this page built with{" "}
-		<Bold>React | Next.js | styled-components | Now.sh</Bold> -{" "}
-		<RepoLink href="https://github.com/mrkutly/portfolio" target="_blank">
-			code here
-		</RepoLink>{" "}
-	</Footer>
-);
+export default props => {
+	const { darkMode } = useContext(DarkModeContext);
+	return (
+		<Footer>
+			this page built with{" "}
+			<Bold>React | Next.js | styled-components | Now.sh</Bold> -{" "}
+			<RepoLink
+				href="https://github.com/mrkutly/portfolio"
+				target="_blank"
+				darkMode={darkMode}
+			>
+				code here
+			</RepoLink>{" "}
+		</Footer>
+	);
+};

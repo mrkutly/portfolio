@@ -7,6 +7,7 @@ const ScrollBox = styled.div`
 	height: 60vh;
 	overflow: scroll;
 	border: 1px solid ${Blue};
+	background-color: white;
 `;
 
 const Image = styled.img`

@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { DarkModeContext } from "../hooks/DarkModeContext";
 import styled from "styled-components";
 import { Purple, Green, Blue } from "./styles/Colors";
 import { MobileTitle, Link, Text, Bold } from "./styles/TextStyles";
@@ -13,16 +15,26 @@ const LinkText = styled.span`
 	font-size: 1.8em;
 `;
 
-function mappedRepos({ frontend, backend }) {
+function mappedRepos({ frontend, backend }, darkMode) {
 	return (
 		<React.Fragment>
 			<LinkText>
-				<Link href={frontend} target="_blank" hoverColor={Blue}>
+				<Link
+					href={frontend}
+					target="_blank"
+					hoverColor={Blue}
+					darkMode={darkMode}
+				>
 					Frontend
 				</Link>
 			</LinkText>
 			<LinkText>
-				<Link href={backend} target="_blank" hoverColor={Blue}>
+				<Link
+					href={backend}
+					target="_blank"
+					hoverColor={Blue}
+					darkMode={darkMode}
+				>
 					Backend
 				</Link>
 			</LinkText>
@@ -30,13 +42,13 @@ function mappedRepos({ frontend, backend }) {
 	);
 }
 
-function repoSwitch(repo) {
+function repoSwitch(repo, darkMode) {
 	if (typeof repo === "object") {
-		return mappedRepos(repo);
+		return mappedRepos(repo, darkMode);
 	}
 
 	return (
-		<Link href={repo} target="_blank" hoverColor={Blue}>
+		<Link href={repo} target="_blank" hoverColor={Blue} darkMode={darkMode}>
 			Github
 		</Link>
 	);
@@ -44,32 +56,45 @@ function repoSwitch(repo) {
 
 export default ({
 	project: { title, link, repo, description, tech, image },
-}) => (
-	<div>
-		<MobileTitle>{title}</MobileTitle>
-		<Text>{description}</Text>
-		<Text>
-			<Bold textColor={Purple}>Tech</Bold> - {tech}
-		</Text>
-		<LinksBox>
-			{link && repo ? (
-				<React.Fragment>
+}) => {
+	const { darkMode } = useContext(DarkModeContext);
+	return (
+		<div>
+			<MobileTitle darkMode={darkMode}>{title}</MobileTitle>
+			<Text>{description}</Text>
+			<Text>
+				<Bold textColor={Purple}>Tech</Bold> - {tech}
+			</Text>
+			<LinksBox>
+				{link && repo ? (
+					<React.Fragment>
+						<LinkText>
+							<Link
+								href={link}
+								target="_blank"
+								hoverColor={Green}
+								darkMode={darkMode}
+							>
+								Live
+							</Link>
+						</LinkText>
+						{repoSwitch(repo, darkMode)}
+					</React.Fragment>
+				) : repo ? (
+					<LinkText>{repoSwitch(repo, darkMode)}</LinkText>
+				) : link ? (
 					<LinkText>
-						<Link href={link} target="_blank" hoverColor={Green}>
+						<Link
+							href={link}
+							target="_blank"
+							hoverColor={Green}
+							darkMode={darkMode}
+						>
 							Live
 						</Link>
 					</LinkText>
-					{repoSwitch(repo)}
-				</React.Fragment>
-			) : repo ? (
-				<LinkText>{repoSwitch(repo)}</LinkText>
-			) : link ? (
-				<LinkText>
-					<Link href={link} target="_blank" hoverColor={Green}>
-						Live
-					</Link>
-				</LinkText>
-			) : null}
-		</LinksBox>
-	</div>
-);
+				) : null}
+			</LinksBox>
+		</div>
+	);
+};
