@@ -1,28 +1,31 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import ProjectLink from "./ProjectLink";
 import MobileProjectCard from "./MobileProjectCard";
 
-export default class Project extends React.Component {
-	state = {
-		width: null,
-	};
+export default props => {
+	const [width, setWidth] = useState(null);
 
-	componentDidMount() {
-		this.setState({ width: window.innerWidth });
-	}
+	useEffect(() => {
+		setWidth(window.innerWidth);
+		// some code here to create the event listener
 
-	render() {
-		const { setActiveProject, project } = this.props;
-		const mobileLayout = this.state.width <= 1000;
+		// some HOF to debounce it
 
-		return (
-			<>
-				{mobileLayout ? (
-					<MobileProjectCard project={project} />
-				) : (
-					<ProjectLink setActiveProject={setActiveProject} project={project} />
-				)}
-			</>
-		);
-	}
-}
+		// add it to the window
+
+		// return a function to remove it
+	});
+
+	const { setActiveProject, project } = props;
+	const mobileLayout = width <= 1000;
+
+	return (
+		<>
+			{mobileLayout ? (
+				<MobileProjectCard project={project} />
+			) : (
+				<ProjectLink setActiveProject={setActiveProject} project={project} />
+			)}
+		</>
+	);
+};
