@@ -15,7 +15,6 @@ export default ({ project, setActiveProject }) => {
 
 	const openModal = async e => {
 		e.preventDefault();
-		// TODO: Code here to set modal state
 		setActiveProject(project);
 	};
 
