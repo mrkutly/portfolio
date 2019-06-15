@@ -3,25 +3,11 @@ import ProjectLink from "./ProjectLink";
 import MobileProjectCard from "./MobileProjectCard";
 
 export default props => {
-	const [width, setWidth] = useState(null);
-
-	useEffect(() => {
-		setWidth(window.innerWidth);
-		// some code here to create the event listener
-
-		// some HOF to debounce it
-
-		// add it to the window
-
-		// return a function to remove it
-	});
-
-	const { setActiveProject, project } = props;
-	const mobileLayout = width <= 1000;
+	const { mobile, setActiveProject, project } = props;
 
 	return (
 		<>
-			{mobileLayout ? (
+			{mobile ? (
 				<MobileProjectCard project={project} />
 			) : (
 				<ProjectLink setActiveProject={setActiveProject} project={project} />
